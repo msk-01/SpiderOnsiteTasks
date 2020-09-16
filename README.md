@@ -55,7 +55,7 @@ A logging daemon that can listen to multiple ports and log any stream of datatha
 
 2. Open other terminals and run
 
-'''python3 client.py```
+```python3 client.py```
 
 3. Input username and start chatting with multiple clients!!
 
