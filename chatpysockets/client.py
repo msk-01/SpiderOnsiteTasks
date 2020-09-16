@@ -2,7 +2,7 @@ import socket
 import select
 import sys
 import errno
-HEADER= 10
+HEADER= 20
 IP = socket.gethostbyname(socket.gethostname())
 PORT = 5050
 
@@ -14,13 +14,13 @@ client_socket.setblocking(False)
 
 username = myUsername.encode('utf-8')
 usernameHeader = f"{len(username):<{HEADER}}".encode('utf-8')
-client_socket.send(usernameHeader+username)
+client_socket.send(usernameHeader + username)
 while True:
     message = input(f'{myUsername}: ')
     if message:
         message = message.encode('utf-8')
         messageHeader = f"{len(message):<{HEADER}}".encode('utf-8')
-        client_socket.send(messageHeader+message)
+        client_socket.send(messageHeader + message)
 
     try:
         while True:
@@ -28,10 +28,10 @@ while True:
             if not len(usernameHeader):
                 print('Connection closed by the server')
                 sys.exit()
-            usernameLength = int(usernameHeader.decode('utf-8'))
+            usernameLength = int(usernameHeader.decode('utf-8').strip())
             username = client_socket.recv(usernameLength).decode('utf-8')
-            messageHeader = client_socket(HEADER)
-            messageLength = int(messageHeader.decode('utf-8'))
+            messageHeader = client_socket.recv(HEADER)
+            messageLength = int(messageHeader.decode('utf-8').strip())
             message = client_socket.recv(messageLength).decode('utf-8')
             print(f"{username}: {message}")
 
